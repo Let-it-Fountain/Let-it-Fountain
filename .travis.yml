@@ -1,4 +1,5 @@
-service: docker
+services:
+ - docker
 
 script:
  - docker run --rm -it -v `pwd`:/home/python-test/src awesoon/let-it-fountain -c "cd src && PYTHONPATH=../blender/bin:PYTHONPATH python3.5 -m unittest"
