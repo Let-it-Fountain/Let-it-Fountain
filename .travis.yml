@@ -1,0 +1,7 @@
+script:
+ - ls
+ - pwd
+ - ls ..
+
+sudo: false
+
