@@ -31,3 +31,27 @@ def create_bpy_object(context, name=None, parent=None, scale=None):
 def create_bpy_cylinder(context, name=None, parent=None, scale=None):
     return _create_bpy_object_internal(bpy.ops.mesh.primitive_cylinder_add,
                                        context, name=name, parent=parent, scale=scale)
+
+
+def create_bpy_color(name, rgb):
+    color = bpy.data.materials.new(name)
+    color.diffuse_color = rgb
+    return color
+
+
+def get_red_color():
+    return get_or_create_color('Red', (1, 0, 0))
+
+
+def get_green_color():
+    return get_or_create_color('Green', (0, 1, 0))
+
+
+def get_blue_color():
+    return get_or_create_color('Blue', (0, 0, 1))
+
+
+def get_or_create_color(name, rgb):
+    if name in bpy.data.materials:
+        return bpy.data.materials[name]
+    return create_bpy_color(name, rgb)
