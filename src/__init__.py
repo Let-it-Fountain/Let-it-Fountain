@@ -1,6 +1,7 @@
 import bpy
 
-from .operators import AddNozzleOperator, InitializeFountainOperator
+from .operators.add_nozzle_operator import AddNozzleOperator
+from .operators.initialize_fountain_operator import InitializeFountainOperator
 from .panels import LetItFountainPanel
 
 
