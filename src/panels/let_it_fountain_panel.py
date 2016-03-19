@@ -32,6 +32,22 @@ class LetItFountainPanel(bpy.types.Panel):
         self.layout.label('Number of nozzles: {}'.format(len(fountain.nozzles_list)))
         self.layout.operator('lif.add_nozzle')
 
+        if context.object not in fountain.nozzles_list:
+            self.layout.label('Select a nozzle to change color or pressure')
+            return
+
+        self.layout.label('Selected nozzle: {}'.format(context.object.name))
+
+        name_row = self.layout.row()
+        name_row.prop(context.object, 'name', text="Name")
+
+        color_row = self.layout.row()
+        material = self.get_nozzle_water(context.object).data.materials[0]
+        color_row.prop(material, "diffuse_color", text="Color")
+
+    def get_nozzle_water(self, nozzle):
+        return nozzle.children[0]
+
     def get_fountain_model(self, context):
         fountain = LifContext.get_fountain(context)
         return None if fountain is None else FountainModel(fountain)
