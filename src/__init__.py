@@ -1,5 +1,7 @@
 import bpy
 
+from .operators.add_nozzle_operator import AddNozzleOperator
+from .operators.initialize_fountain_operator import InitializeFountainOperator
 from .panels import LetItFountainPanel
 
 
@@ -18,11 +20,15 @@ bl_info = {
 
 
 def register():
-    bpy.utils.register_module(__name__)
+    bpy.utils.register_class(InitializeFountainOperator)
+    bpy.utils.register_class(AddNozzleOperator)
+    bpy.utils.register_class(LetItFountainPanel)
 
 
 def unregister():
-    bpy.utils.register_module(__name__)
+    bpy.utils.unregister_class(LetItFountainPanel)
+    bpy.utils.unregister_class(AddNozzleOperator)
+    bpy.utils.unregister_class(InitializeFountainOperator)
 
 
 if __name__ == '__main__':
