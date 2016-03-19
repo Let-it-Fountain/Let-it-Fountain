@@ -2,7 +2,7 @@ import bpy
 
 from ..core import LifContext
 from ..models import FountainModel
-from ..utils.bpy_helpers import create_bpy_object
+from ..utils.bpy_helpers import create_bpy_cylinder
 from ..utils.optional import Optional
 
 
@@ -14,7 +14,14 @@ class AddNozzleOperator(bpy.types.Operator):
     bl_label = "Add nozzle"
 
     def create_nozzle(self, context, name=None, parent=None):
-        return create_bpy_object(context, name=name, parent=parent)
+        nozzle = create_bpy_cylinder(context, name=name, parent=parent, scale=[0.1, 0.1, 0.2])
+        water = create_bpy_cylinder(context, name=LifContext.nozzle_water_part_name, parent=nozzle)
+        bpy.ops.object.constraint_add(type='COPY_LOCATION')
+        water.constraints['Copy Location'].target = nozzle
+        water.constraints['Copy Location'].use_x = True
+        water.constraints['Copy Location'].use_y = True
+        water.constraints['Copy Location'].use_z = False
+        return nozzle
 
     def execute(self, context):
         nozzles_group = (Optional(LifContext.get_fountain(context))
@@ -22,6 +29,6 @@ class AddNozzleOperator(bpy.types.Operator):
                          .map(lambda f: f.nozzles_group)
                          .or_else(None))
         if nozzles_group is not None:
-            self.create_nozzle(context, name='Nozzle', parent=nozzles_group)
+            self.create_nozzle(context, name=LifContext.nozzle_name, parent=nozzles_group)
 
         return {'FINISHED'}
