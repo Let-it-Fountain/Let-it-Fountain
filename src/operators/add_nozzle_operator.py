@@ -25,7 +25,7 @@ class AddNozzleOperator(bpy.types.Operator):
         water.constraints['Copy Location'].use_x = True
         water.constraints['Copy Location'].use_y = True
         water.constraints['Copy Location'].use_z = False
-        water.data.materials.append(create_bpy_color(nozzle.name, (0.1, 0.5, 1)))
+        water.data.materials.append(create_bpy_color(nozzle.name, (0.1, 0.5, 1), emit=1))
         water.select = False
         nozzle.select = True
         bpy.context.scene.objects.active = nozzle

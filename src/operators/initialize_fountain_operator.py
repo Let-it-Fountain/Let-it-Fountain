@@ -19,9 +19,18 @@ class InitializeFountainOperator(bpy.types.Operator):
         return nozzles
 
     def execute(self, context):
-        plane = create_bpy_plane(context, location=(0, 0, -0.1), scale=(10, 10, 1))
+        plane = create_bpy_plane(context, location=(0, 0, -0.1), scale=(100, 100, 1))
         plane.data.materials.append(create_bpy_color('Plane color', (0.03, 0.03, 0.05)))
         fountain = self.create_fountain(context)
         nozzles = self.create_nozzles(fountain, context)
+
+        # Awesome water lighting
+        context.scene.world.light_settings.use_indirect_light = True
+        context.scene.world.light_settings.gather_method = 'APPROXIMATE'
+        context.scene.world.light_settings.indirect_bounces = 2
+
+        if 'Lamp' in bpy.data.objects:
+            bpy.data.objects['Lamp'].hide = True
+            bpy.data.objects['Lamp'].hide_render = True
 
         return {'FINISHED'}
