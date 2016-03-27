@@ -39,13 +39,9 @@ class SoundEqualizer(bpy.types.Operator):
             nozzle_water.select = True
             context.scene.objects.active = nozzle_water
 
-            if bpy.context.active_object.animation_data is not None:
-                bpy.context.active_object.animation_data.action.fcurves[0].lock = False
-                bpy.context.active_object.animation_data.action.fcurves[1].lock = False
-                bpy.context.active_object.animation_data.action.fcurves[2].lock = False
-
-            bpy.ops.anim.keyframe_delete(type='Scaling')
             bpy.ops.anim.keyframe_insert_menu(type='Scaling')
+            LifContext.get_nozzle_water_material(nozzle_water).keyframe_insert('diffuse_color', 0) # R
+            LifContext.get_nozzle_water_material(nozzle_water).keyframe_insert('diffuse_color', 1) # G
 
             bpy.context.active_object.animation_data.action.fcurves[0].lock = True
             bpy.context.active_object.animation_data.action.fcurves[1].lock = True
@@ -56,6 +52,9 @@ class SoundEqualizer(bpy.types.Operator):
                                      attack=0.001, release=0.7)
 
             bpy.context.active_object.animation_data.action.fcurves[2].lock = True
+
+
+
 
         bpy.context.area.type = area_type
         bpy.context.scene.frame_end = 14000
