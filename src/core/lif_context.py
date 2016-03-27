@@ -14,3 +14,7 @@ class LifContext:
     @staticmethod
     def get_nozzle_water(nozzle):
         return next(c for c in nozzle.children if LifContext.nozzle_water_part_name in  c.name)
+
+    @staticmethod
+    def get_nozzle_water_material(nozzle_water):
+        return nozzle_water.data.materials[0]
