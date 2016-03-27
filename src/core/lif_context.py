@@ -10,3 +10,7 @@ class LifContext:
     @staticmethod
     def get_fountain(context):
         return context.scene.objects.get(LifContext.fountain_objects_group_name)
+
+    @staticmethod
+    def get_nozzle_water(nozzle):
+        return next(c for c in nozzle.children if LifContext.nozzle_water_part_name in  c.name)
