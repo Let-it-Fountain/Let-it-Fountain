@@ -42,9 +42,11 @@ def create_bpy_plane(context, name=None, parent=None, scale=None, hide=None, loc
                                        context, name=name, parent=parent, scale=scale, hide=hide, location=location)
 
 
-def create_bpy_color(name, rgb):
+def create_bpy_color(name, rgb, emit=None):
     color = bpy.data.materials.new(name)
     color.diffuse_color = rgb
+    if emit is not None:
+        color.emit = emit
     return color
 
 
